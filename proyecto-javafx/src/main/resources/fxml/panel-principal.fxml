@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ejemplo.PanelPrincipalController"
+            prefWidth="900" prefHeight="600">
+
+    <!-- TOP: Barra de navegación superior -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" prefHeight="50"
+              style="-fx-background-color: #2c3e50; -fx-padding: 0 20;">
+
+            <!-- Logo / Nombre App -->
+            <Label fx:id="lblAppName" text="Mi Aplicación"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <!-- Espaciador flexible -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Barra de búsqueda -->
+            <TextField fx:id="txtBuscar" promptText="Buscar..." prefWidth="250" prefHeight="32"
+                       style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 5 15;"/>
+
+            <!-- Botón notificaciones -->
+            <Button fx:id="btnNotificaciones" text="N"
+                    prefWidth="35" prefHeight="35"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-cursor: hand;"/>
+
+            <!-- Nombre usuario -->
+            <Label fx:id="lblUsuario" text="Daniel García"
+                   style="-fx-text-fill: white; -fx-font-size: 13px;"/>
+
+            <!-- Menú usuario -->
+            <MenuButton fx:id="menuUsuario" text="▼"
+                        style="-fx-background-color: transparent; -fx-text-fill: white;">
+                <items>
+                    <MenuItem text="Perfil"/>
+                    <MenuItem text="Configuración"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Cerrar Sesión"/>
+                </items>
+            </MenuButton>
+        </HBox>
+    </top>
+
+    <!-- LEFT: Menú lateral -->
+    <left>
+        <VBox prefWidth="220" style="-fx-background-color: #34495e;">
+            <padding>
+                <Insets top="10" right="0" bottom="10" left="0"/>
+            </padding>
+
+            <!-- Opciones principales del menú -->
+            <Button fx:id="btnInicio" text="   Inicio" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+            <Button fx:id="btnUsuarios" text="   Usuarios" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #bdc3c7; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+            <Button fx:id="btnEstadisticas" text="   Estadísticas" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #bdc3c7; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+            <Button fx:id="btnProyectos" text="   Proyectos" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #bdc3c7; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+            <Button fx:id="btnCalendario" text="   Calendario" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #bdc3c7; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+
+            <!-- Espaciador flexible -->
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- Opciones inferiores -->
+            <Separator style="-fx-background-color: #4a6278;"/>
+            <Button fx:id="btnConfiguracion" text="   Configuración" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #bdc3c7; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+            <Button fx:id="btnAyuda" text="   Ayuda" prefHeight="40" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #bdc3c7; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT; -fx-padding: 0 20; -fx-cursor: hand;">
+            </Button>
+        </VBox>
+    </left>
+
+    <!-- CENTER: Área de contenido principal -->
+    <center>
+        <VBox spacing="15" style="-fx-background-color: #ecf0f1;">
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25"/>
+            </padding>
+
+            <!-- Encabezado de sección -->
+            <Label fx:id="lblTituloSeccion" text="Dashboard"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label text="Resumen general de la actividad"
+                   style="-fx-font-size: 14px; -fx-text-fill: #888888;">
+                <VBox.margin>
+                    <Insets top="-10"/>
+                </VBox.margin>
+            </Label>
+
+            <!-- Fila de tarjetas de estadísticas -->
+            <HBox spacing="15">
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+
+                <!-- Tarjeta 1: Usuarios Activos -->
+                <VBox alignment="CENTER_LEFT" spacing="5" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Usuarios Activos" style="-fx-font-size: 12px; -fx-text-fill: #888;"/>
+                    <Label fx:id="lblCardUsuarios" text="1,234"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #3498db;"/>
+                </VBox>
+
+                <!-- Tarjeta 2: Proyectos -->
+                <VBox alignment="CENTER_LEFT" spacing="5" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Proyectos" style="-fx-font-size: 12px; -fx-text-fill: #888;"/>
+                    <Label fx:id="lblCardProyectos" text="56"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2ecc71;"/>
+                </VBox>
+
+                <!-- Tarjeta 3: Tareas Pendientes -->
+                <VBox alignment="CENTER_LEFT" spacing="5" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Tareas Pendientes" style="-fx-font-size: 12px; -fx-text-fill: #888;"/>
+                    <Label fx:id="lblCardPendientes" text="89"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #e74c3c;"/>
+                </VBox>
+
+                <!-- Tarjeta 4: Completadas -->
+                <VBox alignment="CENTER_LEFT" spacing="5" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Completadas" style="-fx-font-size: 12px; -fx-text-fill: #888;"/>
+                    <Label fx:id="lblCardCompletadas" text="342"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #9b59b6;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Tabla de datos -->
+            <TableView fx:id="tblDatos" VBox.vgrow="ALWAYS"
+                       style="-fx-background-radius: 8;">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="120"/>
+                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="100"/>
+                </columns>
+                <placeholder>
+                    <Label text="No hay datos disponibles"/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- BOTTOM: Barra de estado -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="10" prefHeight="28"
+              style="-fx-background-color: #bdc3c7; -fx-padding: 0 15;">
+
+            <Label fx:id="lblEstado" text="● Conectado"
+                   style="-fx-text-fill: #27ae60; -fx-font-size: 12px;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="lblVersion" text="v1.0.0"
+                   style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+
+            <Separator orientation="VERTICAL" prefHeight="15"/>
+
+            <Label text="Última actualización: hace 5 min"
+                   style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

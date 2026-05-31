@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Manual: Diseño Rápido de Interfaces JavaFX+FXML con Agentes de Codificación</title>
+    <style>
+        @page {
+            margin: 2cm;
+            size: A4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px 40px;
+            font-size: 11pt;
+        }
+
+        /* Portada */
+        .cover {
+            text-align: center;
+            page-break-after: always;
+            padding-top: 120px;
+        }
+
+        .cover h1 {
+            font-size: 28pt;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .cover .subtitle {
+            font-size: 16pt;
+            color: #7f8c8d;
+            margin-bottom: 60px;
+        }
+
+        .cover .info {
+            font-size: 12pt;
+            color: #555;
+            margin-top: 80px;
+        }
+
+        .cover .info p {
+            margin: 5px 0;
+        }
+
+        /* Títulos */
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 20pt;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            font-size: 15pt;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+            font-size: 12pt;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 15px;
+            font-size: 11pt;
+        }
+
+        /* Código */
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 10pt;
+        }
+
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.5;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Cajas de información */
+        .info-box {
+            background-color: #eaf6ff;
+            border-left: 4px solid #3498db;
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+            page-break-inside: avoid;
+        }
+
+        .warning-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #f39c12;
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+            page-break-inside: avoid;
+        }
+
+        .success-box {
+            background-color: #eafff0;
+            border-left: 4px solid #27ae60;
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+            page-break-inside: avoid;
+        }
+
+        /* Diagrama de flujo */
+        .flow-diagram {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Consolas', monospace;
+            font-size: 9.5pt;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        /* Listas */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        /* Saltos de página */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* Índice */
+        .toc {
+            page-break-after: always;
+        }
+
+        .toc h2 {
+            text-align: center;
+            border-bottom: none;
+        }
+
+        .toc ol {
+            font-size: 12pt;
+            line-height: 2;
+        }
+
+        .toc ol ol {
+            font-size: 11pt;
+            line-height: 1.8;
+        }
+
+        /* ASCII mockup */
+        .mockup {
+            background-color: #fafafa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 8.5pt;
+            line-height: 1.3;
+            white-space: pre;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #999;
+            font-size: 9pt;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        /* Numeración de pasos */
+        .step {
+            background: #3498db;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+
+        .step-container {
+            display: flex;
+            align-items: flex-start;
+            margin: 12px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                padding: 0;
+            }
+            pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PORTADA -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="cover">
+    <h1>Diseño Rápido de Interfaces Gráficas<br>JavaFX + FXML</h1>
+    <p class="subtitle">con Agentes de Codificación (OpenCode)</p>
+
+    <div style="margin: 50px 0;">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+            <rect x="10" y="10" width="100" height="100" rx="10" fill="#3498db" opacity="0.1" stroke="#3498db" stroke-width="2"/>
+            <rect x="20" y="25" width="80" height="8" rx="4" fill="#3498db" opacity="0.6"/>
+            <rect x="20" y="40" width="60" height="6" rx="3" fill="#bdc3c7"/>
+            <rect x="20" y="55" width="80" height="25" rx="4" fill="none" stroke="#95a5a6" stroke-width="1.5"/>
+            <rect x="20" y="88" width="80" height="14" rx="4" fill="#3498db"/>
+            <text x="60" y="98" text-anchor="middle" fill="white" font-size="8" font-family="sans-serif">GENERAR</text>
+        </svg>
+    </div>
+
+    <div class="info">
+        <p><strong>Asignatura:</strong> Diseño de Interfaces (DI)</p>
+        <p><strong>Curso:</strong> 2024-2025</p>
+        <p><strong>Autor:</strong> Daniel García</p>
+        <p><strong>Objetivo:</strong> Manual de usuario para acelerar el diseño de interfaces JavaFX desde bocetos/mockups usando herramientas de IA gratuitas</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ÍNDICE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="toc">
+    <h2>Índice</h2>
+    <ol>
+        <li><strong>Introducción y Objetivos</strong></li>
+        <li><strong>Requisitos Previos</strong></li>
+        <li><strong>Visión General del Flujo de Trabajo</strong></li>
+        <li><strong>Etapa 1: De Mockup/Boceto a Descripción Digital</strong>
+            <ol type="a">
+                <li>Alternativa A: Foto + IA con Visión</li>
+                <li>Alternativa B: Herramientas de Wireframing</li>
+                <li>Alternativa C: Descripción Textual Directa</li>
+                <li>Alternativa D: Scene Builder como Referencia</li>
+                <li>Comparativa de Alternativas</li>
+            </ol>
+        </li>
+        <li><strong>Etapa 2: De Descripción Digital a FXML con OpenCode</strong>
+            <ol type="a">
+                <li>Configuración de OpenCode con Modelos Gratuitos</li>
+                <li>Fichero de Instrucciones para el Agente</li>
+                <li>Generación del FXML</li>
+                <li>Generación del Controller y App</li>
+            </ol>
+        </li>
+        <li><strong>Scripts de Automatización (Python)</strong>
+            <ol type="a">
+                <li>Script de Análisis de Mockup</li>
+                <li>Pipeline Completo Automatizado</li>
+            </ol>
+        </li>
+        <li><strong>Ejemplo Práctico Completo</strong>
+            <ol type="a">
+                <li>Pantalla de Login</li>
+                <li>Panel Principal (Dashboard)</li>
+            </ol>
+        </li>
+        <li><strong>Prompts Utilizados (Referencia Completa)</strong></li>
+        <li><strong>Proyecto JavaFX: Ejecución</strong></li>
+        <li><strong>Conclusiones</strong></li>
+    </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 1. INTRODUCCIÓN -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1>1. Introducción y Objetivos</h1>
+
+<h2>Problema</h2>
+<p>El diseño de interfaces gráficas en JavaFX usando FXML es un proceso que tradicionalmente requiere:</p>
+<ul>
+    <li>Conocimiento detallado de la sintaxis XML de FXML</li>
+    <li>Familiaridad con los layouts y componentes de JavaFX</li>
+    <li>Tiempo considerable en Scene Builder arrastrando componentes</li>
+    <li>Escritura manual de código repetitivo (Controllers, imports, fx:id...)</li>
+</ul>
+
+<h2>Solución propuesta</h2>
+<p>Un <strong>toolkit/metodología</strong> que permite a un estudiante pasar de una idea (boceto en papel, wireframe digital, o descripción verbal) a una interfaz JavaFX funcional <strong>lanzable</strong> (sin lógica de negocio) en el menor tiempo posible, usando:</p>
+<ul>
+    <li><strong>IAs con visión</strong> (Gemini, ChatGPT) para analizar bocetos</li>
+    <li><strong>Agentes de codificación</strong> (OpenCode) para generar FXML</li>
+    <li><strong>Modelos gratuitos</strong> (Gemini Flash, Codestral) para no tener coste</li>
+    <li><strong>Scripts Python</strong> opcionales para automatizar el pipeline</li>
+</ul>
+
+<h2>Objetivo del manual</h2>
+<p>Que cualquier estudiante pueda replicar el proceso y generar interfaces JavaFX rápidamente siguiendo los pasos documentados, sin necesidad de conocimientos avanzados de FXML.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 2. REQUISITOS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">2. Requisitos Previos</h1>
+
+<h2>Software necesario</h2>
+<table>
+    <tr>
+        <th>Software</th>
+        <th>Versión mínima</th>
+        <th>Descarga</th>
+        <th>Obligatorio</th>
+    </tr>
+    <tr>
+        <td>Java JDK</td>
+        <td>17+</td>
+        <td>adoptium.net</td>
+        <td>Sí</td>
+    </tr>
+    <tr>
+        <td>Apache Maven</td>
+        <td>3.8+</td>
+        <td>maven.apache.org</td>
+        <td>Sí</td>
+    </tr>
+    <tr>
+        <td>OpenCode</td>
+        <td>Última</td>
+        <td>github.com/opencode-ai/opencode</td>
+        <td>Sí</td>
+    </tr>
+    <tr>
+        <td>Python</td>
+        <td>3.8+</td>
+        <td>python.org</td>
+        <td>Opcional (scripts)</td>
+    </tr>
+    <tr>
+        <td>Scene Builder</td>
+        <td>20+</td>
+        <td>gluonhq.com</td>
+        <td>Opcional (verificar)</td>
+    </tr>
+</table>
+
+<h2>API Keys necesarias (gratuitas)</h2>
+
+<div class="info-box">
+    <strong>Google Gemini API Key (Recomendado):</strong>
+    <ol>
+        <li>Ir a <code>https://aistudio.google.com/apikey</code></li>
+        <li>Iniciar sesión con cuenta de Google</li>
+        <li>Pulsar "Create API Key"</li>
+        <li>Copiar la key generada</li>
+    </ol>
+    <p>Límite gratuito: ~1500 peticiones/día con Gemini 2.0 Flash</p>
+</div>
+
+<h2>Instalación de dependencias Python (opcional)</h2>
+<pre><code>pip install google-generativeai Pillow</code></pre>
+
+<h2>Configuración de la API Key</h2>
+<pre><code># Windows (CMD)
+set GOOGLE_API_KEY=tu-api-key-aqui
+
+# Windows (PowerShell)
+$env:GOOGLE_API_KEY="tu-api-key-aqui"
+
+# Linux/Mac
+export GOOGLE_API_KEY="tu-api-key-aqui"</code></pre>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 3. VISIÓN GENERAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">3. Visión General del Flujo de Trabajo</h1>
+
+<div class="flow-diagram">
+┌─────────────────┐     ┌───────────────────────┐     ┌────────────────────────┐     ┌──────────────────┐
+│                 │     │                       │     │                        │     │                  │
+│   IDEA/BOCETO   │────►│     ETAPA 1           │────►│      ETAPA 2           │────►│    RESULTADO     │
+│                 │     │  Mockup → Digital     │     │   Digital → FXML       │     │                  │
+│  • Papel        │     │                       │     │                        │     │  • .fxml         │
+│  • Wireframe    │     │  • IA con visión      │     │  • OpenCode            │     │  • Controller    │
+│  • Idea mental  │     │  • Script Python      │     │  • Modelo gratuito     │     │  • App.java      │
+│                 │     │  • Texto manual       │     │  • Gemini/Mistral      │     │  • Lanzable      │
+│                 │     │                       │     │                        │     │                  │
+└─────────────────┘     └───────────────────────┘     └────────────────────────┘     └──────────────────┘
+</div>
+
+<h2>Tres opciones de flujo según velocidad</h2>
+
+<table>
+    <tr>
+        <th>Opción</th>
+        <th>Flujo</th>
+        <th>Velocidad</th>
+        <th>Automatización</th>
+    </tr>
+    <tr>
+        <td><strong>A: Script Python</strong></td>
+        <td>Foto → Script → Todo generado automáticamente</td>
+        <td>Máxima</td>
+        <td>Total</td>
+    </tr>
+    <tr>
+        <td><strong>B: OpenCode guiado</strong></td>
+        <td>Descripción .md → OpenCode → FXML + Java</td>
+        <td>Alta</td>
+        <td>Semi-auto</td>
+    </tr>
+    <tr>
+        <td><strong>C: Solo OpenCode</strong></td>
+        <td>Descripción verbal directa a OpenCode</td>
+        <td>Alta</td>
+        <td>Manual con agente</td>
+    </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 4. ETAPA 1 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">4. Etapa 1: De Mockup/Boceto a Descripción Digital</h1>
+
+<p>El objetivo de esta etapa es convertir una <strong>idea visual</strong> (boceto en papel, wireframe, o idea mental) en un <strong>fichero de texto estructurado</strong> que un agente de codificación pueda interpretar correctamente.</p>
+
+<h2>4.a) Alternativa A: Foto + IA con Visión (Recomendada)</h2>
+
+<p>La forma más rápida y natural de trabajar.</p>
+
+<h3>Herramientas gratuitas con visión:</h3>
+<table>
+    <tr>
+        <th>Herramienta</th>
+        <th>URL</th>
+        <th>Calidad</th>
+    </tr>
+    <tr>
+        <td>Google Gemini</td>
+        <td>gemini.google.com</td>
+        <td>Excelente</td>
+    </tr>
+    <tr>
+        <td>ChatGPT (GPT-4o mini)</td>
+        <td>chatgpt.com</td>
+        <td>Muy buena</td>
+    </tr>
+    <tr>
+        <td>Microsoft Copilot</td>
+        <td>copilot.microsoft.com</td>
+        <td>Muy buena</td>
+    </tr>
+</table>
+
+<h3>Proceso:</h3>
+<div class="step-container">
+    <span class="step">1</span>
+    <div class="step-content">Dibujar el boceto en papel (no necesita ser perfecto, solo claro)</div>
+</div>
+<div class="step-container">
+    <span class="step">2</span>
+    <div class="step-content">Hacer una foto con el móvil (buena iluminación, sin sombras)</div>
+</div>
+<div class="step-container">
+    <span class="step">3</span>
+    <div class="step-content">Subir la foto a una IA con visión (Gemini recomendado)</div>
+</div>
+<div class="step-container">
+    <span class="step">4</span>
+    <div class="step-content">Usar el prompt de análisis (ver sección 8)</div>
+</div>
+<div class="step-container">
+    <span class="step">5</span>
+    <div class="step-content">Copiar el resultado y guardarlo como fichero <code>.md</code></div>
+</div>
+
+<h3>Prompt para analizar la foto:</h3>
+<pre><code>Analiza esta imagen de un mockup/boceto de interfaz gráfica de usuario.
+
+Genera una descripción estructurada en formato Markdown orientada a JavaFX/FXML con:
+
+1. LAYOUT GENERAL: Tipo de layout principal (BorderPane, VBox, HBox, GridPane, etc.)
+2. COMPONENTES: Lista cada componente visible con:
+   - Tipo JavaFX (Button, Label, TextField, TableView, MenuBar, etc.)
+   - Texto/contenido visible
+   - Posición aproximada (arriba, centro, izquierda, etc.)
+   - Tamaño relativo (ancho completo, mitad, etc.)
+3. JERARQUÍA: Estructura anidada de contenedores y componentes
+4. ESTILOS: Colores, alineaciones, espaciados notables
+
+Formato de salida: descripción técnica orientada a JavaFX/FXML.
+Incluye una tabla con los fx:id de cada componente interactivo.</code></pre>
+
+<div class="success-box">
+    <strong>Ventajas:</strong> Muy rápido, natural, no requiere herramientas extra de diseño.<br>
+    <strong>Desventajas:</strong> Depende de la calidad del boceto y de la interpretación de la IA.
+</div>
+
+<h2 class="page-break">4.b) Alternativa B: Herramientas de Wireframing</h2>
+
+<h3>Herramientas gratuitas:</h3>
+<table>
+    <tr>
+        <th>Herramienta</th>
+        <th>URL</th>
+        <th>Mejor para</th>
+    </tr>
+    <tr>
+        <td><strong>Excalidraw</strong></td>
+        <td>excalidraw.com</td>
+        <td>Bocetos rápidos estilo mano alzada</td>
+    </tr>
+    <tr>
+        <td><strong>Figma</strong></td>
+        <td>figma.com</td>
+        <td>Wireframes profesionales</td>
+    </tr>
+    <tr>
+        <td>draw.io</td>
+        <td>app.diagrams.net</td>
+        <td>Diagramas de layout</td>
+    </tr>
+    <tr>
+        <td>Pencil Project</td>
+        <td>pencil.evolus.vn</td>
+        <td>Prototipado GUI (open source)</td>
+    </tr>
+</table>
+
+<h3>Proceso:</h3>
+<ol>
+    <li>Crear el wireframe en la herramienta elegida</li>
+    <li>Exportar como imagen (PNG/JPG)</li>
+    <li>Usar la misma técnica de la Alternativa A (subir a IA con visión)</li>
+</ol>
+
+<div class="info-box">
+    <strong>Ventajas:</strong> Diseño más limpio y preciso, colaborativo (Figma).<br>
+    <strong>Desventajas:</strong> Requiere aprender la herramienta, más lento que papel.
+</div>
+
+<h2>4.c) Alternativa C: Descripción Textual Directa</h2>
+
+<p>Si ya tienes claro lo que quieres, puedes escribir la descripción directamente sin necesidad de imagen.</p>
+
+<h3>Plantilla de descripción:</h3>
+<pre><code># Interfaz: [Nombre de la pantalla]
+
+## Layout principal: [BorderPane/VBox/HBox/GridPane/AnchorPane/StackPane]
+## Dimensiones: [ancho x alto en px]
+
+## Estructura:
+- **TOP**:
+  - [Componente]: [descripción]
+- **LEFT**:
+  - [Componente]: [descripción]
+- **CENTER**:
+  - [Componente]: [descripción]
+- **BOTTOM**:
+  - [Componente]: [descripción]
+
+## Componentes con fx:id:
+| ID         | Tipo          | Texto            | Posición |
+|------------|---------------|------------------|----------|
+| btnLogin   | Button        | "Iniciar Sesión" | CENTER   |
+| txtUsuario | TextField     | prompt: "User"   | CENTER   |
+
+## Estilos:
+- Color primario: #3498db
+- Fuente: System 14px
+- Espaciado: 10px entre elementos</code></pre>
+
+<div class="info-box">
+    <strong>Ventajas:</strong> No necesita ninguna herramienta, máximo control, el agente lo interpreta perfectamente.<br>
+    <strong>Desventajas:</strong> Requiere conocer los nombres de componentes JavaFX.
+</div>
+
+<h2>4.d) Alternativa D: Scene Builder como Referencia</h2>
+
+<p>Usar Scene Builder para crear un prototipo visual rápido y luego dejar que el agente mejore el FXML generado.</p>
+
+<h3>Proceso:</h3>
+<ol>
+    <li>Abrir Scene Builder</li>
+    <li>Arrastrar componentes básicos (sin preocuparse por estilos)</li>
+    <li>Guardar el FXML</li>
+    <li>Pedir al agente que lo mejore/complete</li>
+</ol>
+
+<div class="warning-box">
+    <strong>Nota:</strong> Esta alternativa es la menos eficiente porque ya estás haciendo manualmente parte del trabajo que el agente podría hacer. Solo úsala si quieres un punto de partida visual muy concreto.
+</div>
+
+<h2 class="page-break">4.e) Comparativa de Alternativas</h2>
+
+<table>
+    <tr>
+        <th>Criterio</th>
+        <th>A: Foto+IA</th>
+        <th>B: Wireframe</th>
+        <th>C: Texto</th>
+        <th>D: SceneBuilder</th>
+    </tr>
+    <tr>
+        <td><strong>Velocidad</strong></td>
+        <td>★★★★★</td>
+        <td>★★★☆☆</td>
+        <td>★★★★☆</td>
+        <td>★★☆☆☆</td>
+    </tr>
+    <tr>
+        <td><strong>Precisión</strong></td>
+        <td>★★★☆☆</td>
+        <td>★★★★☆</td>
+        <td>★★★★★</td>
+        <td>★★★★★</td>
+    </tr>
+    <tr>
+        <td><strong>Facilidad de uso</strong></td>
+        <td>★★★★★</td>
+        <td>★★★☆☆</td>
+        <td>★★★☆☆</td>
+        <td>★★★★☆</td>
+    </tr>
+    <tr>
+        <td><strong>Coste</strong></td>
+        <td>Gratis</td>
+        <td>Gratis</td>
+        <td>Gratis</td>
+        <td>Gratis</td>
+    </tr>
+    <tr>
+        <td><strong>Requiere IA</strong></td>
+        <td>Sí (visión)</td>
+        <td>Opcional</td>
+        <td>No</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td><strong>Mejor para</strong></td>
+        <td>Prototipado rápido</td>
+        <td>Trabajo en equipo</td>
+        <td>Control total</td>
+        <td>Ajustes finos</td>
+    </tr>
+</table>
+
+<div class="success-box">
+    <strong>Recomendación:</strong> Para máxima velocidad usa la Alternativa A (foto + IA). Para máximo control usa la Alternativa C (descripción textual). Puedes combinar ambas: foto → IA → ajustar la descripción manualmente → pasar a Etapa 2.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 5. ETAPA 2 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">5. Etapa 2: De Descripción Digital a FXML con OpenCode</h1>
+
+<h2>5.a) Configuración de OpenCode con Modelos Gratuitos</h2>
+
+<h3>Qué es OpenCode</h3>
+<p>OpenCode es un <strong>agente de codificación en terminal</strong> (CLI) que permite interactuar con modelos de IA para generar, editar y refactorizar código directamente en tu proyecto.</p>
+
+<h3>Instalación</h3>
+<pre><code># Instalar OpenCode (consultar documentación actualizada)
+npm install -g @anthropic-ai/opencode
+
+# Verificar instalación
+opencode --version</code></pre>
+
+<h3>Configuración con Google Gemini (Gratuito)</h3>
+<pre><code># 1. Obtener API Key en https://aistudio.google.com/apikey
+
+# 2. Configurar variable de entorno
+export GOOGLE_API_KEY="tu-api-key"
+
+# 3. Configurar OpenCode para usar Gemini
+# (consultar documentación de OpenCode para la configuración específica)</code></pre>
+
+<h3>Modelos gratuitos recomendados:</h3>
+<table>
+    <tr>
+        <th>Modelo</th>
+        <th>Proveedor</th>
+        <th>Calidad para FXML</th>
+        <th>Velocidad</th>
+    </tr>
+    <tr>
+        <td><strong>gemini-2.0-flash</strong></td>
+        <td>Google</td>
+        <td>★★★★☆</td>
+        <td>Muy rápido</td>
+    </tr>
+    <tr>
+        <td>gemini-2.5-pro</td>
+        <td>Google</td>
+        <td>★★★★★</td>
+        <td>Medio (límite diario)</td>
+    </tr>
+    <tr>
+        <td>codestral-latest</td>
+        <td>Mistral</td>
+        <td>★★★★☆</td>
+        <td>Rápido</td>
+    </tr>
+</table>
+
+<h2>5.b) Fichero de Instrucciones para el Agente</h2>
+
+<p>El fichero <code>OPENCODE-INSTRUCTIONS.md</code> es un fichero que se coloca en la raíz del proyecto para que OpenCode lo lea como contexto. Contiene todas las reglas y patrones que el agente debe seguir al generar FXML.</p>
+
+<div class="info-box">
+    <strong>Cómo usarlo:</strong> Al abrir OpenCode en el proyecto, el agente puede leer este fichero con un simple comando: <code>"Lee OPENCODE-INSTRUCTIONS.md para entender tu rol"</code>. A partir de ahí, seguirá las reglas definidas.
+</div>
+
+<h3>Contenido clave del fichero de instrucciones:</h3>
+<ul>
+    <li>Rol del agente (generador de interfaces JavaFX)</li>
+    <li>Flujo de trabajo paso a paso</li>
+    <li>Reglas obligatorias para el FXML (imports, fx:id, controller, estilos)</li>
+    <li>Plantilla de descripción estructurada</li>
+    <li>Tabla de referencia de componentes JavaFX</li>
+    <li>Convenciones de nombrado</li>
+</ul>
+
+<h2 class="page-break">5.c) Generación del FXML</h2>
+
+<h3>Proceso con OpenCode:</h3>
+
+<div class="step-container">
+    <span class="step">1</span>
+    <div class="step-content">
+        <strong>Abrir OpenCode en la raíz del proyecto</strong>
+        <pre><code>cd mi-proyecto-javafx
+opencode</code></pre>
+    </div>
+</div>
+
+<div class="step-container">
+    <span class="step">2</span>
+    <div class="step-content">
+        <strong>Pedir que lea las instrucciones</strong>
+        <pre><code>Lee el fichero OPENCODE-INSTRUCTIONS.md para entender tu rol.
+Luego lee mockups/descripcion-login.md y genera el FXML correspondiente
+en src/main/resources/fxml/login.fxml</code></pre>
+    </div>
+</div>
+
+<div class="step-container">
+    <span class="step">3</span>
+    <div class="step-content">
+        <strong>Verificar el resultado</strong>
+        <ul>
+            <li>Abrir el FXML en Scene Builder para verificar visualmente</li>
+            <li>O ejecutar con <code>mvn javafx:run</code></li>
+        </ul>
+    </div>
+</div>
+
+<div class="step-container">
+    <span class="step">4</span>
+    <div class="step-content">
+        <strong>Corregir si es necesario</strong>
+        <pre><code>Lee src/main/resources/fxml/login.fxml y corrige:
+- Los botones no están centrados
+- Falta padding en el contenedor principal
+- El campo de contraseña debería ser PasswordField</code></pre>
+    </div>
+</div>
+
+<h3>Reglas que el FXML generado debe cumplir:</h3>
+<ul>
+    <li>Incluir <strong>todos</strong> los <code>&lt;?import?&gt;</code> necesarios</li>
+    <li>Usar <code>fx:controller="com.ejemplo.NombreController"</code></li>
+    <li>Asignar <code>fx:id</code> a todos los componentes interactivos</li>
+    <li>Convención de fx:id: <code>btn</code>, <code>txt</code>, <code>lbl</code>, <code>tbl</code>, <code>col</code>, <code>chk</code>, <code>cmb</code></li>
+    <li>Estilos inline con <code>style="-fx-..."</code></li>
+    <li>Layout responsive con <code>hgrow</code>/<code>vgrow</code></li>
+</ul>
+
+<h2>5.d) Generación del Controller y App</h2>
+
+<h3>Prompt para generar el Controller:</h3>
+<pre><code>Lee el fichero src/main/resources/fxml/login.fxml y genera la clase
+Controller Java correspondiente.
+- Package: com.ejemplo
+- Nombre: LoginController
+- @FXML para cada fx:id
+- Método initialize() vacío
+- SIN lógica de negocio
+Guardar en src/main/java/com/ejemplo/LoginController.java</code></pre>
+
+<h3>Prompt para generar App.java:</h3>
+<pre><code>Genera una clase App.java que extienda Application, cargue
+/fxml/login.fxml y muestre la ventana.
+Package: com.ejemplo
+Guardar en src/main/java/com/ejemplo/App.java</code></pre>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 6. SCRIPTS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">6. Scripts de Automatización (Python)</h1>
+
+<p>Se incluyen dos scripts Python que automatizan las etapas usando la API gratuita de Google Gemini.</p>
+
+<h2>6.a) Script: analizar_mockup.py</h2>
+
+<p><strong>Función:</strong> Toma una imagen de mockup y genera la descripción estructurada en formato .md</p>
+
+<h3>Uso:</h3>
+<pre><code># Instalar dependencias
+pip install google-generativeai Pillow
+
+# Configurar API Key
+export GOOGLE_API_KEY="tu-api-key"
+
+# Ejecutar
+python scripts/analizar_mockup.py mockups/mi-boceto.jpg Login</code></pre>
+
+<h3>Resultado:</h3>
+<p>Genera el fichero <code>mockups/descripcion-login.md</code> con la descripción estructurada lista para la Etapa 2.</p>
+
+<h2>6.b) Script: pipeline_completo.py</h2>
+
+<p><strong>Función:</strong> Pipeline completo automatizado. Un solo comando genera todo: descripción + FXML + Controller + App.java</p>
+
+<h3>Uso:</h3>
+<pre><code># Pipeline completo
+python scripts/pipeline_completo.py foto-mockup.jpg NombrePantalla com.mipaquete</code></pre>
+
+<h3>Qué genera:</h3>
+<table>
+    <tr>
+        <th>Fichero</th>
+        <th>Ruta</th>
+    </tr>
+    <tr>
+        <td>Descripción .md</td>
+        <td><code>mockups/descripcion-nombrepantalla.md</code></td>
+    </tr>
+    <tr>
+        <td>FXML</td>
+        <td><code>src/main/resources/fxml/nombrepantalla.fxml</code></td>
+    </tr>
+    <tr>
+        <td>Controller</td>
+        <td><code>src/main/java/com/.../NombrePantallaController.java</code></td>
+    </tr>
+    <tr>
+        <td>App lanzadora</td>
+        <td><code>src/main/java/com/.../App.java</code></td>
+    </tr>
+</table>
+
+<div class="success-box">
+    <strong>Ventaja principal:</strong> De una foto a un proyecto JavaFX lanzable en un solo comando.
+</div>
+
+<h3>Flujo interno del script:</h3>
+<div class="flow-diagram">
+┌──────────────┐     ┌─────────────────┐     ┌──────────────────┐     ┌────────────────┐
+│  Imagen PNG  │────►│  Gemini API     │────►│  Gemini API      │────►│  Ficheros      │
+│  del mockup  │     │  (Paso 1)       │     │  (Paso 2)        │     │  generados     │
+│              │     │  Análisis       │     │  Generar FXML    │     │  .fxml + .java │
+│              │     │  de imagen      │     │  + Controller    │     │                │
+└──────────────┘     └─────────────────┘     └──────────────────┘     └────────────────┘
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 7. EJEMPLO PRÁCTICO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">7. Ejemplo Práctico Completo</h1>
+
+<p>A continuación se muestra un ejemplo completo con dos interfaces: <strong>Login</strong> y <strong>Panel Principal</strong>.</p>
+
+<h2>7.a) Pantalla de Login</h2>
+
+<h3>Mockup ASCII (simulando un boceto en papel):</h3>
+<div class="mockup">
+┌──────────────────────────────────────┐
+│              (fondo gris)            │
+│                                      │
+│   ┌──────────────────────────────┐   │
+│   │      (tarjeta blanca)        │   │
+│   │                              │   │
+│   │      Iniciar Sesión          │   │
+│   │     Accede a tu cuenta       │   │
+│   │                              │   │
+│   │  ┌──────────────────────┐    │   │
+│   │  │ Correo electrónico   │    │   │
+│   │  └──────────────────────┘    │   │
+│   │                              │   │
+│   │  ┌──────────────────────┐    │   │
+│   │  │ Contraseña           │    │   │
+│   │  └──────────────────────┘    │   │
+│   │                              │   │
+│   │  ☐ Recordarme    ¿Olvidaste? │   │
+│   │                              │   │
+│   │  ┌──────────────────────┐    │   │
+│   │  │   INICIAR SESIÓN     │    │   │ (botón azul)
+│   │  └──────────────────────┘    │   │
+│   │                              │   │
+│   │  ──────── o ────────         │   │
+│   │                              │   │
+│   │  ┌──────────────────────┐    │   │
+│   │  │  Crear cuenta nueva  │    │   │ (botón outline)
+│   │  └──────────────────────┘    │   │
+│   │                              │   │
+│   └──────────────────────────────┘   │
+│                                      │
+└──────────────────────────────────────┘
+</div>
+
+<h3>Descripción estructurada generada:</h3>
+<pre><code># Interfaz: Pantalla de Login
+
+## Layout principal: StackPane > VBox (centrado)
+## Dimensiones: 400 x 550 px
+## Fondo: #f0f2f5
+
+## Estructura:
+- StackPane (fondo gris)
+  - VBox (centrado, maxWidth 340)
+    - VBox (tarjeta blanca, sombra, bordes redondeados, padding 40px)
+      - Label "Iniciar Sesión" (24px, bold)
+      - Label "Accede a tu cuenta" (13px, gris)
+      - TextField (promptText: "Correo electrónico")
+      - PasswordField (promptText: "Contraseña")
+      - HBox:
+        - CheckBox "Recordarme"
+        - Region (espaciador)
+        - Hyperlink "¿Olvidaste tu contraseña?"
+      - Button "Iniciar Sesión" (azul, ancho completo)
+      - HBox (separador con "o")
+      - Button "Crear cuenta nueva" (outline, ancho completo)</code></pre>
+
+<h3 class="page-break">FXML generado (fragmento):</h3>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+
+&lt;StackPane xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.ejemplo.LoginController"
+           prefWidth="400" prefHeight="550"
+           style="-fx-background-color: #f0f2f5;"&gt;
+
+    &lt;VBox alignment="CENTER" spacing="0" maxWidth="340"&gt;
+        &lt;VBox alignment="CENTER" spacing="8"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 10;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 3);"&gt;
+            &lt;padding&gt;&lt;Insets top="40" right="35" bottom="35" left="35"/&gt;&lt;/padding&gt;
+
+            &lt;Label fx:id="lblTitulo" text="Iniciar Sesión"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/&gt;
+
+            &lt;TextField fx:id="txtEmail" promptText="Correo electrónico"
+                       prefHeight="40" maxWidth="Infinity"/&gt;
+
+            &lt;PasswordField fx:id="txtPassword" promptText="Contraseña"
+                           prefHeight="40" maxWidth="Infinity"/&gt;
+
+            &lt;Button fx:id="btnLogin" text="Iniciar Sesión"
+                    prefHeight="42" maxWidth="Infinity"
+                    style="-fx-background-color: #3498db;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;"/&gt;
+
+            &lt;Button fx:id="btnRegistro" text="Crear cuenta nueva"
+                    prefHeight="42" maxWidth="Infinity"
+                    style="-fx-border-color: #3498db;
+                           -fx-text-fill: #3498db;"/&gt;
+        &lt;/VBox&gt;
+    &lt;/VBox&gt;
+&lt;/StackPane&gt;</code></pre>
+
+<h2 class="page-break">7.b) Panel Principal (Dashboard)</h2>
+
+<h3>Mockup ASCII:</h3>
+<div class="mockup">
+┌────────────────────────────────────────────────────────────────────┐
+│ Mi Aplicación          [Buscar...        ] 🔔  Daniel García  ▼   │
+├──────────────┬─────────────────────────────────────────────────────┤
+│              │                                                     │
+│  Inicio      │  Dashboard                                         │
+│  Usuarios    │  Resumen general de la actividad                   │
+│  Estadísticas│                                                     │
+│  Proyectos   │  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐             │
+│  Calendario  │  │Usuar.│ │Proye.│ │Pendi.│ │Compl.│             │
+│              │  │1,234 │ │  56  │ │  89  │ │ 342  │             │
+│              │  └──────┘ └──────┘ └──────┘ └──────┘             │
+│              │                                                     │
+│              │  ┌─────┬────────┬───────┬───────┬────────┐        │
+│              │  │ ID  │Nombre  │Estado │Fecha  │Acciones│        │
+│              │  ├─────┼────────┼───────┼───────┼────────┤        │
+│              │  │ 001 │Proy A  │Activo │01/05  │  ...   │        │
+│              │  │ 002 │Proy B  │Pausa  │15/04  │  ...   │        │
+│  Configurac. │  │ ... │  ...   │ ...   │ ...   │  ...   │        │
+│  Ayuda       │  └─────┴────────┴───────┴───────┴────────┘        │
+├──────────────┴─────────────────────────────────────────────────────┤
+│ ● Conectado                              v1.0.0  Actualizado: 5m  │
+└────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h3>Estructura del FXML generado:</h3>
+<ul>
+    <li><strong>BorderPane</strong> como layout raíz (900x600px)</li>
+    <li><strong>TOP:</strong> HBox con barra de navegación oscura (#2c3e50)
+        <ul>
+            <li>Label (nombre app), Region (espaciador), TextField (búsqueda), Button (notificaciones), MenuButton (usuario)</li>
+        </ul>
+    </li>
+    <li><strong>LEFT:</strong> VBox con menú lateral (#34495e)
+        <ul>
+            <li>Buttons de navegación (Inicio, Usuarios, etc.)</li>
+            <li>Region (espaciador flexible)</li>
+            <li>Buttons inferiores (Configuración, Ayuda)</li>
+        </ul>
+    </li>
+    <li><strong>CENTER:</strong> VBox con contenido principal (#ecf0f1)
+        <ul>
+            <li>Labels de título</li>
+            <li>HBox con 4 tarjetas de estadísticas (VBox cada una)</li>
+            <li>TableView con 5 columnas</li>
+        </ul>
+    </li>
+    <li><strong>BOTTOM:</strong> HBox con barra de estado</li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 8. PROMPTS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">8. Prompts Utilizados (Referencia Completa)</h1>
+
+<p>Todos los prompts están guardados en la carpeta <code>prompts/</code> del proyecto. A continuación se resumen:</p>
+
+<h2>Prompt 01: Analizar mockup con IA de visión</h2>
+<p><strong>Uso:</strong> Subir foto de boceto a Gemini/ChatGPT/Copilot</p>
+<p><strong>Resultado:</strong> Descripción estructurada en Markdown</p>
+<pre><code>Analiza esta imagen de un mockup/boceto de interfaz gráfica.
+Genera una descripción estructurada en Markdown orientada a JavaFX/FXML.
+Identifica: layout principal, todos los componentes (tipo JavaFX exacto),
+posiciones, textos, y genera una tabla con los fx:id.
+Usa convención: btn, txt, lbl, tbl, col, chk, cmb.</code></pre>
+
+<h2>Prompt 02: Generar FXML desde descripción</h2>
+<p><strong>Uso:</strong> En OpenCode, cuando ya tienes el fichero .md de descripción</p>
+<pre><code>Lee el fichero mockups/descripcion-[nombre].md y genera un fichero FXML
+para JavaFX que implemente esa interfaz.
+
+Requisitos:
+- Incluir todos los &lt;?import?&gt; necesarios
+- fx:controller="com.ejemplo.[Nombre]Controller"
+- fx:id en TODOS los componentes interactivos
+- Estilos inline con style="-fx-..."
+- Layout responsive (hgrow, vgrow, maxWidth="Infinity")
+- SIN lógica, solo interfaz visual
+- Guardar en src/main/resources/fxml/[nombre].fxml</code></pre>
+
+<h2>Prompt 03: Corregir/refinar FXML</h2>
+<p><strong>Uso:</strong> En OpenCode, para iterar sobre un FXML ya generado</p>
+<pre><code>Lee src/main/resources/fxml/[nombre].fxml y corrige/mejora:
+- [Describir el problema concreto]
+- [Ej: "los botones no están centrados"]
+- [Ej: "falta padding", "la tabla no ocupa todo el ancho"]
+Mantén el resto del diseño igual.</code></pre>
+
+<h2>Prompt 04: Generar Controller y App.java</h2>
+<p><strong>Uso:</strong> En OpenCode, después de tener el FXML</p>
+<pre><code>Lee TODOS los .fxml en src/main/resources/fxml/ y para cada uno:
+1. Genera su Controller Java vacío con todos los @FXML
+2. Guárdalo en src/main/java/com/ejemplo/[Nombre]Controller.java
+
+Genera también App.java que cargue [nombre].fxml como pantalla principal.
+Package: com.ejemplo</code></pre>
+
+<h2>Prompt 05: Múltiples pantallas de una vez</h2>
+<p><strong>Uso:</strong> Generar varias interfaces en una sola sesión de OpenCode</p>
+<pre><code>Genera interfaces FXML para estas pantallas:
+1. LOGIN: [descripción]
+2. REGISTRO: [descripción]
+3. PANEL PRINCIPAL: [descripción]
+
+Para cada una: .fxml + Controller vacío.
+Estilo visual coherente. Misma paleta de colores.
+Al final, App.java que lance login.fxml.</code></pre>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 9. EJECUCIÓN -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">9. Proyecto JavaFX: Ejecución</h1>
+
+<h2>Estructura del proyecto Maven</h2>
+<pre><code>proyecto-javafx/
+├── pom.xml
+└── src/main/
+    ├── java/com/ejemplo/
+    │   ├── App.java                    ← Clase lanzadora
+    │   ├── LoginController.java        ← Controller (vacío)
+    │   └── PanelPrincipalController.java
+    └── resources/fxml/
+        ├── login.fxml                  ← Interfaz de login
+        └── panel-principal.fxml        ← Interfaz del dashboard</code></pre>
+
+<h2>Cómo ejecutar</h2>
+<pre><code># 1. Navegar al directorio del proyecto
+cd proyecto-javafx
+
+# 2. Compilar y ejecutar con Maven
+mvn javafx:run</code></pre>
+
+<h2>Cambiar la interfaz que se lanza</h2>
+<p>En <code>App.java</code>, cambiar la constante:</p>
+<pre><code>// Para ver el login:
+private static final String FXML_A_CARGAR = "/fxml/login.fxml";
+
+// Para ver el panel principal:
+private static final String FXML_A_CARGAR = "/fxml/panel-principal.fxml";</code></pre>
+
+<h2>pom.xml (dependencias)</h2>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.openjfx&lt;/groupId&gt;
+        &lt;artifactId&gt;javafx-controls&lt;/artifactId&gt;
+        &lt;version&gt;17.0.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.openjfx&lt;/groupId&gt;
+        &lt;artifactId&gt;javafx-fxml&lt;/artifactId&gt;
+        &lt;version&gt;17.0.2&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.openjfx&lt;/groupId&gt;
+            &lt;artifactId&gt;javafx-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;0.0.8&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;mainClass&gt;com.ejemplo.App&lt;/mainClass&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+
+<div class="warning-box">
+    <strong>Importante:</strong> Se necesita Java 17+ y Maven instalados. Si usas un IDE como IntelliJ o Eclipse, puedes importar el proyecto como proyecto Maven y ejecutar directamente la clase App.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 10. CONCLUSIONES -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<h1 class="page-break">10. Conclusiones</h1>
+
+<h2>Resumen de lo conseguido</h2>
+
+<p>Este toolkit demuestra que es posible <strong>reducir drásticamente</strong> el tiempo de diseño de interfaces JavaFX usando agentes de codificación y herramientas de IA gratuitas:</p>
+
+<table>
+    <tr>
+        <th>Aspecto</th>
+        <th>Método Tradicional</th>
+        <th>Con este Toolkit</th>
+    </tr>
+    <tr>
+        <td>De idea a FXML</td>
+        <td>Lento (Scene Builder manual)</td>
+        <td>Rápido (un prompt)</td>
+    </tr>
+    <tr>
+        <td>Conocimiento requerido</td>
+        <td>FXML, layouts JavaFX</td>
+        <td>Mínimo (la IA lo genera)</td>
+    </tr>
+    <tr>
+        <td>Controller boilerplate</td>
+        <td>Escribir manualmente</td>
+        <td>Generado automáticamente</td>
+    </tr>
+    <tr>
+        <td>Coste</td>
+        <td>Gratis</td>
+        <td>Gratis (APIs gratuitas)</td>
+    </tr>
+    <tr>
+        <td>Calidad resultado</td>
+        <td>Alta (manual)</td>
+        <td>Buena (iterando con agente)</td>
+    </tr>
+</table>
+
+<h2>Flujo más rápido posible</h2>
+
+<ol>
+    <li><strong>Foto del boceto</strong> en papel → subir a Gemini → descripción <code>.md</code></li>
+    <li><strong>Abrir OpenCode</strong> → pedir que lea la descripción → genera <code>.fxml</code></li>
+    <li><strong>Pedir Controller</strong> → genera <code>.java</code> → ejecutar con <code>mvn javafx:run</code></li>
+</ol>
+
+<p>O con el <strong>script Python</strong>: un solo comando que hace todo.</p>
+
+<h2>Herramientas utilizadas</h2>
+<ul>
+    <li><strong>OpenCode</strong> - Agente de codificación en terminal (obligatorio)</li>
+    <li><strong>Google Gemini</strong> - Modelo gratuito con visión y generación de código</li>
+    <li><strong>Python</strong> - Scripts de automatización (opcional)</li>
+    <li><strong>Maven + JavaFX 17</strong> - Proyecto ejecutable</li>
+    <li><strong>Scene Builder</strong> - Verificación visual (opcional)</li>
+</ul>
+
+<h2>Puntos clave para la defensa</h2>
+<ol>
+    <li><strong>Práctico y reutilizable:</strong> cualquier estudiante puede usar este toolkit</li>
+    <li><strong>Múltiples alternativas documentadas:</strong> 4 formas de hacer la Etapa 1</li>
+    <li><strong>Todo gratuito:</strong> no requiere licencias ni suscripciones de pago</li>
+    <li><strong>Ejemplo funcional:</strong> el proyecto compila y se ejecuta</li>
+    <li><strong>Prompts documentados:</strong> todos los prompts están guardados y explicados</li>
+    <li><strong>Automatizable:</strong> scripts Python para el pipeline completo</li>
+    <li><strong>Extensible:</strong> fácil añadir más pantallas siguiendo el mismo flujo</li>
+</ol>
+
+<div class="footer">
+    <p>Manual generado para la asignatura de Diseño de Interfaces (DI) - Subida de Nota</p>
+    <p>Herramientas utilizadas: OpenCode + Modelos gratuitos (Gemini)</p>
+</div>
+
+</body>
+</html>
